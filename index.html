@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html ng-app="graphon">
+  <head>
+    <meta charset="utf-8" />
+    <title>iGraph</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="css/math.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/jquery.ui.css" rel="stylesheet">
+    <script src="js/kinetic-v4.7.2.min.js"></script>
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/jquery.ui.js"></script>
+    <script src="js/jquery.ui.touch.js"></script>
+    <script src="js/fastclick.js"></script>
+    <script src="js/math.min.js"></script>
+    <script src="js/calculadora.js"></script>
+    <script src="js/graficos.js"></script>
+
+    <script src="js/angular.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/angular-resource.js"></script>
+    <script src="js/uibootstrap.js"></script>
+    <script src="js/slider.js"></script>
+  </head>
+  <body ng-controller="MainCtrl" id="MainCtrl">
+    <div class="header">
+      <img src="img/logo.png" alt="Gráficos (MathMagic)" />
+    </div>
+    <div class="toolbar">
+      <span class="closeToolbar"><a href="javascript;"><i class="icon-caret-left i1"></i><i class="icon-caret-right i2"></i></a></span>
+      <div class="equation">
+          <div class="mathquill-editable math" id="bla">ax^2+bx+c</div>
+      </div>
+      <div class="params">
+        <div class="param" ng-repeat="p in parameters">
+          <span ng-show="!isAnimatingParams">
+            <a href="javascript:;" ng-click="animateThis(p)" ng-show="!p.animating" class="playParam"><i class="icon-play"></i></a>
+            <a href="javascript:;" ng-click="stopAnimateThis(p)" ng-show="p.animating" class="playParam"><i class="icon-stop"></i></a>
+          </span>
+          <b>{{p.name}} = {{p.currentValue | number:2}}</b><br>
+          De: {{p.starting}} a: {{p.ending}}
+          <div class="sliderContainer">
+            <div ui-slider min="{{p.starting}}" step="0.1" use-decimals max="{{p.ending}}" ng-model="p.currentValue"></div>
+          </div>
+        </div>
+      </div>
+      <div ng-hide="size(parameters)==0">
+        <button class="btn" ng-click="isAnimatingParams=!isAnimatingParams" ng-show="!isAnimatingParams"><i class="icon-play"></i> Animar parâmetros</button>
+        <button class="btn" ng-click="isAnimatingParams=!isAnimatingParams" ng-show="isAnimatingParams"><i class="icon-stop"></i> Para paramêtros</button>
+      </div>
+    </div>
+    <div class="toolbar2">
+      <a href="javascript:;" class="btnHome"><i class="icon-home"></i></a>
+    </div>
+    <div class="container">
+      <div id="cartesianPlane"></div> 
+    </div>
+    <span class="keyboardcontainer" id="keyboardcontainer" style="display: none;">
+      <div class="row-fluid">
+        <div class="title">
+          <a id="keyboardToggle" src="#"><i class="icon-keyboard"></i> <i id="iconeCaret" class="icon-caret-down"></i><i id="iconeCaret2" class="icon-caret-up"></i></a>
+        </div>  
+        <div class="span3 keyboardCont">
+              <span class="keyboard number" data-cmd="write" data-value="7">7</span>  
+              <span class="keyboard number" data-cmd="write" data-value="8">8</span>
+              <span class="keyboard number" data-cmd="write" data-value="9">9</span>
+              <span class="keyboard number lastitem" data-cmd="cmd" data-value="*">×</span>  
+              <span class="keyboard number" data-cmd="write" data-value="4">4</span>  
+              <span class="keyboard number" data-cmd="write" data-value="5">5</span>  
+              <span class="keyboard number" data-cmd="write" data-value="6">6</span> 
+              <span class="keyboard number lastitem" data-cmd="cmd" data-value="+">+</span>
+              <span class="keyboard number" data-cmd="write" data-value="1">1</span>  
+              <span class="keyboard number" data-cmd="write" data-value="2">2</span>
+              <span class="keyboard number" data-cmd="write" data-value="3">3</span> 
+              <span class="keyboard number lastitem" data-cmd="cmd" data-value="-">-</span>  
+              <span class="keyboard number numberzero" data-cmd="write" data-value="9">0</span>  
+              <span class="keyboard number" data-cmd="write" data-value="9">.</span>  
+              <span class="keyboard number lastitem" data-cmd="cmd" data-value="/">÷</span>
+        </div>
+        <div class="span3 keyboardCont">
+              <span class="keyboard keysymbol" data-cmd="write" data-value="^2" style="padding: -4px 0;">a<sup>2</sup></span>
+              <span class="keyboard keysymbol" data-cmd="cmd" data-value="\sqrt">√</span>
+              <span class="keyboard keysymbol" data-cmd="write" data-value="x">x</span>
+              <span class="keyboard keysymbol" data-cmd="cmd" data-value="\^">a<sup>b</sup></span>
+              <span class="keyboard symbolbackspace lastitem" data-cmd="cmd2" data-value="Backspace">Backspace</span>
+              <span class="keyboard keysymbol" onClick="alert('preguiça de terminar hoje...');">Del</span>
+              <span class="keyboard keysymbol" data-cmd="move" data-value="Up">&#8593;</span>
+              <span class="keyboard keysymbol lastitem" data-cmd="move" data-value="Up">Enter&#8629;</span>
+              <span class="keyboard keysymbol" data-cmd="move" data-value="Left">&#8592;</span>
+              <span class="keyboard keysymbol" data-cmd="move" data-value="Down">&#8595;</span>
+              <span class="keyboard keysymbol" data-cmd="move" data-value="Right">a&#8594;</span>
+        </div>
+      </div>
+    </div><!-- Keyboardcontainer -->
+  </body>
+</html>
